@@ -17,6 +17,10 @@ const DIR_VEC: Dictionary = {
 var blocked: Dictionary = {}
 ## Rempli par la map : grass_tiles[Vector2i(x,y)] = true
 var grass_tiles: Dictionary = {}
+## Rempli par la map : heal_tiles[Vector2i(x,y)] = true
+var heal_tiles: Dictionary = {}
+
+signal healed
 ## Table de rencontre du tile courant. Format : { encounter_rate, pool[] }
 var encounter_table: Dictionary = {}
 ## Limites de la map (en tiles)
@@ -71,6 +75,9 @@ func _process(_delta: float) -> void:
 
 func _on_move_finished() -> void:
 	_moving = false
+	if heal_tiles.has(tile_pos):
+		healed.emit()
+		return
 	_check_encounter()
 
 func _check_encounter() -> void:

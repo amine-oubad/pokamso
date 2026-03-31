@@ -13,7 +13,7 @@ var current_hp: int = 1
 var atk: int = 1
 var def: int = 1
 var catch_rate: int = 45  # issu des données d'espèce
-var moves: Array = []     # liste de move_id — non utilisée encore
+var moves: Array = []     # liste de dicts {id, name, power, category, ...}
 
 ## Construit une instance depuis un dict d'espèce (chargé depuis JSON) et un niveau.
 static func from_species(data: Dictionary, lvl: int) -> MonsterInstance:
@@ -28,6 +28,15 @@ static func from_species(data: Dictionary, lvl: int) -> MonsterInstance:
 	m.atk        = maxi(1, int(base.get("atk", 10) / 10.0) + lvl / 5)
 	m.def        = maxi(1, int(base.get("def", 10) / 10.0) + lvl / 5)
 	m.current_hp = m.max_hp
+	# Moves : 2 dernières attaques physiques/spéciales apprises à ce niveau.
+	var levelup: Array = data.get("levelup_moves", [])
+	var learned: Array = []
+	for entry in levelup:
+		if entry.get("level", 1) <= lvl:
+			var move_data := MoveDB.get_move(entry.get("move", ""))
+			if not move_data.is_empty() and move_data.get("category", "") != "status":
+				learned.append(move_data)
+	m.moves = learned.slice(maxi(0, learned.size() - 2))
 	return m
 
 func is_alive() -> bool:
