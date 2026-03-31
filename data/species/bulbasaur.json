@@ -1,0 +1,20 @@
+{
+  "id": "001",
+  "name": "Bulbasaur",
+  "types": ["Grass", "Poison"],
+  "base_stats": {
+    "hp": 45,
+    "atk": 49,
+    "def": 49,
+    "sp_atk": 65,
+    "sp_def": 65,
+    "speed": 45
+  },
+  "catch_rate": 45,
+  "base_exp_yield": 64,
+  "levelup_moves": [
+    {"level": 1, "move": "tackle"},
+    {"level": 1, "move": "growl"},
+    {"level": 7, "move": "vine_whip"}
+  ]
+}

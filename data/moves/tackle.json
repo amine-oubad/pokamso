@@ -1,0 +1,10 @@
+{
+  "id": "tackle",
+  "name": "Tackle",
+  "type": "Normal",
+  "category": "physical",
+  "power": 40,
+  "accuracy": 100,
+  "pp": 35,
+  "priority": 0
+}
